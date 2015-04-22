@@ -67,7 +67,7 @@
                   </tr>
                </table>
             </section>
-            <p id="round">Frage: <%=game.getRoundNr() %>> / 10</p>
+            <p id="round">Frage: <%=game.getRoundNr() %> / 10</p>
          </section>
             
       <!-- Question -->
@@ -80,14 +80,14 @@
                <ul id="answers">
                		<%int count =0; %>
                		<%for(Answer a : game.getRound().getQuestion().getAllAnswers()){ %>
-               			
-                        <li><input name="answers" id="answer_1" value=<%= count++%> type="checkbox"/><label class="tile clickable" for="answer_1"><%= a.getText() %>></label></li>
+               			<% count++; %>
+                        <li><input name="answers" id="answer_${count}" value=<%= count%> type="checkbox"/><label class="tile clickable" for="answer_{count++}"> <%= a.getText() %>></label></li>
 
                		<%}%>
                </ul>
                <input id="timeleftvalue" type="hidden" value="100"/>
                <input class="greenlink formlink clickable" name="answer_submit" id="next" type="submit" value="antworten" accesskey="s"/>
-               <input type ="hidden" action="whattodo" value="answerd" />
+               <input type ="hidden" name="whattodo" value="answerd" />
             </form>
          </section>
             

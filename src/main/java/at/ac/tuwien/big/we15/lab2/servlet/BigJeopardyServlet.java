@@ -59,16 +59,20 @@ public class BigJeopardyServlet extends HttpServlet {
 		if(action.equals("answerd")){
 			Game current = (SimpleGame) session.getAttribute("game");
 			
+			
+			
 			if(current.getRoundNr() == 10){
 				//dupa ce sapu la intrebare sa imi arate gastigatorul
 			}
 			else{
-			//sa imi faca butonul gri sa nu mai pot alege intrebarea inainte sa ma intorc la jeopardy
+				//jeopardy page
+				RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
+				rd.forward(request, response);
+				//sa imi faca butonul gri sa nu mai pot alege intrebarea inainte sa ma intorc la jeopardy
 			}
 			
 		}
 		
-		//System.out.println("Hello! HTTP GET METHOD ");
 	}
 	
 	@Override
@@ -104,7 +108,7 @@ public class BigJeopardyServlet extends HttpServlet {
 			Game current = (SimpleGame) session.getAttribute("game");
 			if(current.getRoundNr() < 10){
 			
-				String question_property = request.getParameter("question_selection");  //returns the input value from html
+				String question_property = request.getParameter("question_selection");  //returns the input value from jsp
 				int value = Integer.parseInt(""+question_property.charAt(0))*10;  
 				String category_name = question_property.substring(2);
 				
@@ -117,7 +121,7 @@ public class BigJeopardyServlet extends HttpServlet {
 			
 				round.setQuestion(question);
 				current.addRound(round);
-			
+				
 				//question page
 				RequestDispatcher rd = request.getRequestDispatcher("question.jsp");
 				rd.forward(request, response);
@@ -125,14 +129,6 @@ public class BigJeopardyServlet extends HttpServlet {
 			
 		}
 		
-		
-		//ana ana ana
-				
-		//andreea
-		//System.out.println("Hello! ");
-		//RequestDispatcher rd = request.getRequestDispatcher("/jeopardy.xhtml"); 
-		//rd.forward(request, response);
-		//andreea
 	}
 	
 	

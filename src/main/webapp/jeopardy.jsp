@@ -128,7 +128,7 @@
                </section> 
                </fieldset>               
                <input class="greenlink formlink clickable" name="question_submit" id="next" type="submit" value="wählen" accesskey="s" />
-               <input type="hidden" action="whattodo" value="waelen" />
+               <input type="hidden" name="whattodo" value="waelen" />
             </form>
          </section>
          
