@@ -21,6 +21,10 @@ public interface JeopardyFactory {
 	public Question createQuestion();
 	
 	public Answer createAnswer();
+	
+	public Player createPlayer();
+	
+	public Game createGame(Player p1, Player p2);
 
 	public QuestionDataProvider createQuestionDataProvider();
 

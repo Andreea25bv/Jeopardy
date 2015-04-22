@@ -12,8 +12,11 @@ package at.ac.tuwien.big.we15.lab2.api.impl;
 
 import at.ac.tuwien.big.we15.lab2.api.Answer;
 import at.ac.tuwien.big.we15.lab2.api.Category;
+import at.ac.tuwien.big.we15.lab2.api.Game;
 import at.ac.tuwien.big.we15.lab2.api.JeopardyFactory;
+import at.ac.tuwien.big.we15.lab2.api.Player;
 import at.ac.tuwien.big.we15.lab2.api.Question;
+import at.ac.tuwien.big.we15.lab2.api.QuestionDataProvider;
 
 public abstract class SimpleJeopardyFactory implements JeopardyFactory {
 
@@ -27,9 +30,20 @@ public abstract class SimpleJeopardyFactory implements JeopardyFactory {
 		return new SimpleQuestion();
 	}
 
+	
 	@Override
 	public Answer createAnswer() {
 		return new SimpleAnswer();
 	}
-
+	
+	@Override
+	public Player createPlayer(){
+		return new SimplePlayer();
+	}
+	
+	@Override
+	public Game createGame(Player p1, Player p2){
+		return new SimpleGame(p1,p2);
+	}
+	
 }

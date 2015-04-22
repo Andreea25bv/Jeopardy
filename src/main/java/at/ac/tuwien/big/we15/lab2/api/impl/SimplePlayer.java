@@ -6,8 +6,8 @@ public class SimplePlayer implements Player {
 
 	private String name;
 	
-	public SimplePlayer(String name) {
-		this.name = name;
+	public SimplePlayer() {
+		super();
 	}
 	
 	@Override

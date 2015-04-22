@@ -12,6 +12,7 @@ package at.ac.tuwien.big.we15.lab2.api.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import at.ac.tuwien.big.we15.lab2.api.Category;
 import at.ac.tuwien.big.we15.lab2.api.Question;
@@ -56,6 +57,19 @@ public class SimpleCategory implements Category {
 	}
 	
 	@Override
+	public Question getQuestionRandom(int value) {
+		List<Question> list = new ArrayList<Question>();
+		for(Question q: questions){
+			if(q.getValue() == value){
+				list.add(q);
+			}
+		}
+		
+		int random = new Random().nextInt(list.size());
+		return list.get(random);
+	}
+	
+	@Override
 	public void setQuestions(List<Question> questions) {
 		this.questions.clear();
 		for(Question question : questions)
@@ -71,6 +85,7 @@ public class SimpleCategory implements Category {
 			}
 		}
 	}
+	
 
 	@Override
 	public void removeQuestion(Question question) {

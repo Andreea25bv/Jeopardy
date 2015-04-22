@@ -34,6 +34,11 @@ public interface Category {
 	 * @return a list of all questions
 	 */
 	public List<Question> getQuestions();
+	
+	/*
+	 * @return a random choosed question with value = param 
+	 */
+	public Question getQuestionRandom(int value); 
 
 	/**
 	 * adds a new question
