@@ -62,6 +62,23 @@ public class SimpleQuestion implements Question {
 	}
 	
 	@Override
+	public boolean check(List<Answer> list){
+		int count=0;
+		
+		for(Answer a: rightAnswers){
+			if(list.contains(a)){
+				count++;
+			}
+		}
+		if(rightAnswers.size() == count){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	@Override
 	public void setId(int id) {
 		this.id = id;
 	}

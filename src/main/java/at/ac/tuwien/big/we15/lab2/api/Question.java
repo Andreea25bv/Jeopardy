@@ -63,6 +63,14 @@ public interface Question {
 	 * @return temporary shuffled list of all choices
 	 */
 	public List<Answer> getAllAnswers();
+	
+	
+	/**
+	 * 
+	 * @param list contains all chosen answers  
+	 * @return true when the player answered correct 
+	 */
+	public boolean check(List<Answer> list);
 
 	/**
 	 * 

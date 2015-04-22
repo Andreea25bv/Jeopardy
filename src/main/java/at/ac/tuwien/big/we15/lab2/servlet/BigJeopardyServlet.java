@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -57,18 +58,44 @@ public class BigJeopardyServlet extends HttpServlet {
 				
 				
 		if(action.equals("answerd")){
-			Game current = (SimpleGame) session.getAttribute("game");
+			
+			Game current_game = (SimpleGame) session.getAttribute("game");
+			List<Answer> choosen = new ArrayList<Answer>();
+			
+			while(request.getParameter("answer") != null ){
+				int value = Integer.parseInt(request.getParameter("answer"));
+				choosen.add(current_game.getRound().getQuestion().getAllAnswers().get(value-1));
+			}
 			
 			
+			if(current_game.getRound().getQuestion().check(choosen)){
+				current_game.setP1Money(current_game.getP1Money()+(current_game.getRound().getQuestion().getValue()*10));
+			}
+			else{
+				current_game.setP1Money(current_game.getP1Money()-(current_game.getRound().getQuestion().getValue()*10));
+			}
 			
-			if(current.getRoundNr() == 10){
-				//dupa ce sapu la intrebare sa imi arate gastigatorul
+			
+			Question computer_question = this.chooseQuestionRandom();
+			if(current_game.computerHasAnswered()){
+				current_game.setP2Money(current_game.getP2Money()+(computer_question.getValue()*10));
+			}
+			else{
+				current_game.setP2Money(current_game.getP2Money()-(computer_question.getValue()*10));
+			}
+			
+			//disable question and computer_question in jeopardy.jsp
+			
+			if(current_game.getRoundNr() == 10){
+				//show me the winner
+				//winner page
+				RequestDispatcher rd = request.getRequestDispatcher("winner.jsp"); 
+				rd.forward(request, response);
 			}
 			else{
 				//jeopardy page
 				RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
 				rd.forward(request, response);
-				//sa imi faca butonul gri sa nu mai pot alege intrebarea inainte sa ma intorc la jeopardy
 			}
 			
 		}
@@ -129,6 +156,19 @@ public class BigJeopardyServlet extends HttpServlet {
 			
 		}
 		
+	}
+	
+	private Question chooseQuestionRandom(){
+		int category_random = new Random().nextInt(5)+1;
+		int value_random=0;
+		if(category_random == 1 || category_random == 4){
+			value_random = new Random().nextInt(4)+1;
+		}
+		else{
+			value_random = new Random().nextInt(5)+1;
+		}
+		
+		return categories.get(category_random).getQuestionRandom(value_random*10);
 	}
 	
 	

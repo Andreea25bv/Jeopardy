@@ -2,9 +2,11 @@ package at.ac.tuwien.big.we15.lab2.api.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import at.ac.tuwien.big.we15.lab2.api.Game;
 import at.ac.tuwien.big.we15.lab2.api.Player;
+import at.ac.tuwien.big.we15.lab2.api.Question;
 import at.ac.tuwien.big.we15.lab2.api.Round;
 
 public class SimpleGame implements Game{
@@ -23,6 +25,10 @@ public class SimpleGame implements Game{
 		this.p2Money = 0;
 	}
 	
+	public boolean computerHasAnswered(){
+		return new Random().nextBoolean();
+		
+	}
 	public int getP1Money(){
 		return p1Money;
 	}
