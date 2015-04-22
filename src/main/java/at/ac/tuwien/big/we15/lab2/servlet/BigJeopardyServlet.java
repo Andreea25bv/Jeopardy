@@ -36,8 +36,11 @@ public class BigJeopardyServlet extends HttpServlet {
 	private Player computerPlayer; 
 	
 	private List<Category> categories;
-	
-	public BigJeopardyServlet() {
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		
 		this.jeopardyFactory = new ServletJeopardyFactory(this.getServletContext());
 		this.computerPlayer = null;
 		this.categories = jeopardyFactory.createQuestionDataProvider().getCategoryData();
@@ -80,7 +83,7 @@ public class BigJeopardyServlet extends HttpServlet {
 				
 		if (action == null) {
 			//login page
-			RequestDispatcher rd = request.getRequestDispatcher("/login.jsp"); 
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
 			rd.forward(request, response);
 		}
 		else if(action.equals("login")){
@@ -91,7 +94,7 @@ public class BigJeopardyServlet extends HttpServlet {
 			session.setAttribute("game", game);
 			
 			//jeopardy page
-			RequestDispatcher rd = request.getRequestDispatcher("/jeopardy.jsp"); 
+			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
 			rd.forward(request, response);
 		}
 		else if(action.equals("waelen")){
@@ -116,7 +119,7 @@ public class BigJeopardyServlet extends HttpServlet {
 				current.addRound(round);
 			
 				//question page
-				RequestDispatcher rd = request.getRequestDispatcher("/question.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("question.jsp");
 				rd.forward(request, response);
 			}
 			
