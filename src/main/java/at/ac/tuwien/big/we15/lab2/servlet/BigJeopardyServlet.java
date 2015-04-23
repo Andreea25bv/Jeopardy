@@ -57,23 +57,31 @@ public class BigJeopardyServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(true);
 				
-				
-		if(action.equals("answerd")){
+		if (action == null) {
+			//login page
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
+			rd.forward(request, response);
+		}		
+		else if(action.equals("answerd")){
 			
 			Game current_game = (SimpleGame) session.getAttribute("game");
 			List<Answer> chosen = new ArrayList<Answer>();
 			
-			//request.getParameter("answers") i am not sure what returns
-			//String list = request.getParameter("answers");
+			String list[] = request.getParameterValues("answers");
 			
-			//is answers not answer...but there are problems when i use answers
-			while(request.getParameter("answer") != null ){
-				int value = Integer.parseInt(request.getParameter("answer"));
-				chosen.add(current_game.getRound().getQuestion().getAllAnswers().get(value-1));
+			if(list != null){
+				for(String s : list ){
+					int value = Integer.parseInt(s);
+					for (Answer a : current_game.getRound().getQuestion().getAllAnswers()) {
+						if (a.getId() == value) {
+							chosen.add(a);
+						}
+					}
+				}
 			}
 			
 			
-			if(current_game.getRound().getQuestion().check(chosen)){
+			if(current_game.getRound().getQuestion().check(chosen) && chosen!=null){
 				current_game.setP1Money(current_game.getP1Money()+(current_game.getRound().getQuestion().getValue()*10));
 				current_game.getRound().setPlayerHasAnswerd("richtig");
 			}

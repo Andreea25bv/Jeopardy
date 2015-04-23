@@ -82,7 +82,7 @@
                		<%int count =0; %>
                		<%for(Answer a : game.getRound().getQuestion().getAllAnswers()){ %>
                			<% count++; %>
-                        <li><input name="answers" id="answer_<%= count %>" value=<%= count%> type="checkbox"/><label class="tile clickable" for="answer_<%= count %>"> <%= a.getText() %></label></li>
+                        <li><input name="answers" id="answer_<%= count %>" value=<%= a.getId()%> type="checkbox"/><label class="tile clickable" for="answer_<%= count %>"> <%= a.getText() %></label></li>
 
                		<%}%>
                </ul>
