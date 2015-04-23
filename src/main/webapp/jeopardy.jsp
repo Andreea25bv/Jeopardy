@@ -3,6 +3,7 @@
 <%@page import="at.ac.tuwien.big.we15.lab2.api.Game" %>
 <%@page import="at.ac.tuwien.big.we15.lab2.api.Question" %>
 <jsp:useBean id="game" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Game" />
+<jsp:useBean id="player" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Player"/>
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -76,11 +77,11 @@
            		 <% if(game.getRound().getPlayerHasAnswerd().equals("richtig")){%>
             <p class="user-info positive-change">Du hast richtig geantwortet: +<%=game.getRound().getQuestion().getValue()*10%> €</p>
            		 <%}else{%>
-        	<p class="user-info positive-change">Du hast falsch geantwortet: -<%=game.getRound().getQuestion().getValue()*10%> €</p>
+        	<p class="user-info negative-change">Du hast falsch geantwortet: -<%=game.getRound().getQuestion().getValue()*10%> €</p>
         		<%} %>
         	
             	<% if(game.getRound().getComputerHasAnswerd().equals("richtig")){%>      	
-        	<p class="user-info negative-change">Deadpool hat richtig geantwortet: +<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
+        	<p class="user-info positive-change">Deadpool hat richtig geantwortet: +<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
             <p class="user-info">Deadpool hat <%=game.getRound().getCompQuestion().getCategory().getName()%> für € <%=game.getRound().getCompQuestion().getValue()*10%> gewählt.</p>
           		 <%}else{ %>
             <p class="user-info negative-change">Deadpool hat falsch geantwortet: -<%=game.getRound().getCompQuestion().getValue()*10%> €</p>

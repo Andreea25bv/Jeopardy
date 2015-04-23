@@ -31,6 +31,13 @@ public class SimpleGame implements Game{
 		return new Random().nextBoolean();
 		
 	}
+	public Player getPlayer1(){
+		return player1;
+	}
+	public Player getPlayer2(){
+		return player2;
+	}
+	
 	public int getP1Money(){
 		return p1Money;
 	}

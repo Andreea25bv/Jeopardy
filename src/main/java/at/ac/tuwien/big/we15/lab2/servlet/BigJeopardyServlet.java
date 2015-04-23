@@ -26,6 +26,7 @@ import at.ac.tuwien.big.we15.lab2.api.Round;
 import at.ac.tuwien.big.we15.lab2.api.impl.JSONQuestionDataProvider;
 import at.ac.tuwien.big.we15.lab2.api.impl.ServletJeopardyFactory;
 import at.ac.tuwien.big.we15.lab2.api.impl.SimpleGame;
+import at.ac.tuwien.big.we15.lab2.api.impl.SimplePlayer;
 import at.ac.tuwien.big.we15.lab2.api.impl.SimpleQuestion;
 import at.ac.tuwien.big.we15.lab2.api.impl.SimpleRound;
 
@@ -62,7 +63,10 @@ public class BigJeopardyServlet extends HttpServlet {
 			Game current_game = (SimpleGame) session.getAttribute("game");
 			List<Answer> chosen = new ArrayList<Answer>();
 			
-			//question.jsp 84 maybe must have type="hidden" TODO 
+			//request.getParameter("answers") i am not sure what returns
+			//String list = request.getParameter("answers");
+			
+			//is answers not answer...but there are problems when i use answers
 			while(request.getParameter("answer") != null ){
 				int value = Integer.parseInt(request.getParameter("answer"));
 				chosen.add(current_game.getRound().getQuestion().getAllAnswers().get(value-1));
@@ -93,7 +97,6 @@ public class BigJeopardyServlet extends HttpServlet {
 			//disable question and computer_question in jeopardy.jsp TODO
 			
 			if(current_game.getRoundNr() == 10){
-				//show me the winner TODO
 				//winner page
 				RequestDispatcher rd = request.getRequestDispatcher("winner.jsp"); 
 				rd.forward(request, response);
@@ -125,10 +128,11 @@ public class BigJeopardyServlet extends HttpServlet {
 		}
 		else if(action.equals("login")){
 			
-			Player p1 = jeopardyFactory.createPlayer();
-			Game game = jeopardyFactory.createGame(p1,computerPlayer);
+			Player player = jeopardyFactory.createPlayer();
+			Game game = jeopardyFactory.createGame(player,computerPlayer);
 			
 			session.setAttribute("game", game);
+			session.setAttribute("player", player);
 			
 			//jeopardy page
 			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
@@ -155,6 +159,17 @@ public class BigJeopardyServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("question.jsp");
 			rd.forward(request, response);
 			
+		}
+		else if(action.equals("nextgame")){
+			
+			Player player = (SimplePlayer) session.getAttribute("player");
+			Game game = jeopardyFactory.createGame(player,computerPlayer);
+			
+			session.setAttribute("game", game);
+			
+			//jeopardy page
+			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
+			rd.forward(request, response);
 		}
 		
 	}

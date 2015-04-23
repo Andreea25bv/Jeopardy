@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="at.ac.tuwien.big.we15.lab2.api.Game" %>
+<%@page import="at.ac.tuwien.big.we15.lab2.api.Question" %>
+<jsp:useBean id="game" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Game" />
+<jsp:useBean id="player" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Player"/>
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
@@ -33,9 +38,23 @@
       <div role="main">
          <section id="gameinfo" aria-labelledby="winnerinfoheading">
             <h2 id="winnerinfoheading" class="accessibility">Gewinnerinformationen</h2>
-            <p class="user-info positive-change">Du hast richtig geantwortet: +1000 €</p>
-            <p class="user-info negative-change">Deadpool hat falsch geantwortet: -500 €</p>
-            <section class="playerinfo leader" aria-labelledby="winnerannouncement">
+            
+            <% if(game.getRound().getPlayerHasAnswerd().equals("richtig")){%>
+            <p class="user-info positive-change">Du hast richtig geantwortet: +<%=game.getRound().getQuestion().getValue()*10%> €</p>
+           		 <%}else{%>
+        	<p class="user-info negative-change">Du hast falsch geantwortet: -<%=game.getRound().getQuestion().getValue()*10%> €</p>
+        		<%} %>
+        	
+            	<% if(game.getRound().getComputerHasAnswerd().equals("richtig")){%>      	
+        	<p class="user-info positive-change">Deadpool hat richtig geantwortet: +<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
+          		 <%}else{ %>
+            <p class="user-info negative-change">Deadpool hat falsch geantwortet: -<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
+           		<%} %>
+
+           
+            	
+            	<%if(game.getP1Money() > game.getP2Money()){ %>
+           <section class="playerinfo leader" aria-labelledby="winnerannouncement">
                <h3 id="winnerannouncement">Gewinner: Black Widow</h3>
                <img class="avatar" src="img/avatar/black-widow.png" alt="Spieler-Avatar Black Widow" />
                <table>
@@ -45,7 +64,7 @@
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ 2000</td>
+                     <td class="playerpoints">€ <%=game.getP1Money() %></td>
                   </tr>
                </table>
             </section>
@@ -59,15 +78,46 @@
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ 400</td>
+                     <td class="playerpoints">€ <%=game.getP2Money()%></td>
                   </tr>
                </table>
             </section>
-         </section>
+            <%}else{ %>
+           <section class="playerinfo leader" aria-labelledby="winnerannouncement">
+            <h3 id="winnerannouncement">Gewinner: Deadpool</h3>
+               <img class="avatar" src="img/avatar/deadpool.png" alt="Spieler-Avatar Deadpool" />
+               <table>
+                  <tr>
+                     <th class="accessibility">Spielername</th>
+                     <td class="playername">Deadpool</td>
+                  </tr>
+                  <tr>
+                     <th class="accessibility">Spielerpunkte</th>
+                     <td class="playerpoints">€ <%=game.getP2Money() %></td>
+                  </tr>
+               </table>
+            </section>
+            <section class="playerinfo" aria-labelledby="loserheading">
+               <h3 id="loserheading" class="accessibility">Verlierer: Black Widow</h3>
+               <img class="avatar" src="img/avatar/black-widow_head.png" alt="Spieler-Avatar Black Widow" />
+               <table>
+                  <tr>
+                     <th class="accessibility">Spielername</th>
+                     <td class="playername">Black Widow</td>
+                  </tr>
+                  <tr>
+                     <th class="accessibility">Spielerpunkte</th>
+                     <td class="playerpoints">€ <%=game.getP1Money()%></td>
+                  </tr>
+               </table>
+            </section>
+            
+            <%} %>
          <section id="newgame" aria-labelledby="newgameheading">
              <h2 id="newgameheading" class="accessibility">Neues Spiel</h2>
-         	<form action="jeopardy.xhtml" method="post">
+         	<form action="index" method="post">
                	<input class="clickable orangelink contentlink" id="new_game" type="submit" name="restart" value="Neues Spiel" />
+            	<input type="hidden" name="whattodo" value="nextgame">
             </form>
          </section>
       </div>

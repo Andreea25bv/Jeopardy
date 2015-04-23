@@ -4,6 +4,7 @@
 <%@page import="at.ac.tuwien.big.we15.lab2.api.Game" %>
 <%@page import="at.ac.tuwien.big.we15.lab2.api.Question" %>
 <jsp:useBean id="game" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Game" />
+<jsp:useBean id="player" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Player"/>
     
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
