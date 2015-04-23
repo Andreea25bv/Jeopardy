@@ -10,5 +10,6 @@ public interface Game {
 	public void addRound(Round r);
 	public Round getRound();
 	public boolean computerHasAnswered();
+	//public Round getLastRound();
 
 }

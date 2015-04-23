@@ -17,6 +17,7 @@ public class SimpleGame implements Game{
 	private int p1Money;
 	private int p2Money;
 	
+	
 	public SimpleGame(Player p1, Player p2 ) {
 		this.player1 = p1;
 		this.player2 = p2;
@@ -24,6 +25,7 @@ public class SimpleGame implements Game{
 		this.p1Money = 0;
 		this.p2Money = 0;
 	}
+	
 	
 	public boolean computerHasAnswered(){
 		return new Random().nextBoolean();
@@ -50,5 +52,6 @@ public class SimpleGame implements Game{
 	public Round getRound(){
 		return rounds.get(rounds.size()-1);
 	}
+	
 
 }

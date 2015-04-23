@@ -60,34 +60,40 @@ public class BigJeopardyServlet extends HttpServlet {
 		if(action.equals("answerd")){
 			
 			Game current_game = (SimpleGame) session.getAttribute("game");
-			List<Answer> choosen = new ArrayList<Answer>();
+			List<Answer> chosen = new ArrayList<Answer>();
 			
+			//question.jsp 84 maybe must have type="hidden" TODO 
 			while(request.getParameter("answer") != null ){
 				int value = Integer.parseInt(request.getParameter("answer"));
-				choosen.add(current_game.getRound().getQuestion().getAllAnswers().get(value-1));
+				chosen.add(current_game.getRound().getQuestion().getAllAnswers().get(value-1));
 			}
 			
 			
-			if(current_game.getRound().getQuestion().check(choosen)){
+			if(current_game.getRound().getQuestion().check(chosen)){
 				current_game.setP1Money(current_game.getP1Money()+(current_game.getRound().getQuestion().getValue()*10));
+				current_game.getRound().setPlayerHasAnswerd("richtig");
 			}
 			else{
 				current_game.setP1Money(current_game.getP1Money()-(current_game.getRound().getQuestion().getValue()*10));
+				current_game.getRound().setPlayerHasAnswerd("falsch");
 			}
 			
 			
-			Question computer_question = this.chooseQuestionRandom();
+			Question computer_question = this.choseQuestionRandom(); //the chosen question can not be disabled TODO
+			current_game.getRound().setCompQuestion(computer_question);
 			if(current_game.computerHasAnswered()){
 				current_game.setP2Money(current_game.getP2Money()+(computer_question.getValue()*10));
+				current_game.getRound().setComputerHasAnswerd("richtig");
 			}
 			else{
 				current_game.setP2Money(current_game.getP2Money()-(computer_question.getValue()*10));
+				current_game.getRound().setComputerHasAnswerd("falsch");
 			}
 			
-			//disable question and computer_question in jeopardy.jsp
+			//disable question and computer_question in jeopardy.jsp TODO
 			
 			if(current_game.getRoundNr() == 10){
-				//show me the winner
+				//show me the winner TODO
 				//winner page
 				RequestDispatcher rd = request.getRequestDispatcher("winner.jsp"); 
 				rd.forward(request, response);
@@ -130,45 +136,41 @@ public class BigJeopardyServlet extends HttpServlet {
 		}
 		else if(action.equals("waelen")){
 			
-			Round round = new SimpleRound();
-			
 			Game current = (SimpleGame) session.getAttribute("game");
-			if(current.getRoundNr() < 10){
 			
-				String question_property = request.getParameter("question_selection");  //returns the input value from jsp
-				int value = Integer.parseInt(""+question_property.charAt(0))*10;  
-				String category_name = question_property.substring(2);
-				
-				Question question = new SimpleQuestion();
-				for(Category c : categories){
-					if(c.getName().equals(category_name)){
-						question = c.getQuestionRandom(value);
-					}
+			String question_property = request.getParameter("question_selection");  //returns the input value from the jsp file
+			int value = Integer.parseInt(""+question_property.charAt(0))*10;  
+			String category_name = question_property.substring(2);
+
+			Question question = new SimpleQuestion();
+			for(Category c : categories){
+				if(c.getName().equals(category_name)){
+					question = c.getQuestionRandom(value);
 				}
-			
-				round.setQuestion(question);
-				current.addRound(round);
-				
-				//question page
-				RequestDispatcher rd = request.getRequestDispatcher("question.jsp");
-				rd.forward(request, response);
 			}
+			Round round = new SimpleRound(question);
+			current.addRound(round);
+
+			//question page
+			RequestDispatcher rd = request.getRequestDispatcher("question.jsp");
+			rd.forward(request, response);
 			
 		}
 		
 	}
 	
-	private Question chooseQuestionRandom(){
-		int category_random = new Random().nextInt(5)+1;
+	private Question choseQuestionRandom(){
+		int category_random = new Random().nextInt(5);  // 0,1,2,3 or 4
 		int value_random=0;
 		if(category_random == 1 || category_random == 4){
-			value_random = new Random().nextInt(4)+1;
+			value_random = new Random().nextInt(4)+1;  // 1,2,3 or 4
 		}
 		else{
-			value_random = new Random().nextInt(5)+1;
+			value_random = new Random().nextInt(5)+1;  // 1,2,3,4 or 5
 		}
 		
 		return categories.get(category_random).getQuestionRandom(value_random*10);
+		
 	}
 	
 	

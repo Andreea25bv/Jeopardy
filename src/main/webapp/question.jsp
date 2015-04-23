@@ -49,7 +49,7 @@
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints"><%= game.getP1Money() %>></td>
+                     <td class="playerpoints">€ <%= game.getP1Money() %></td>
                   </tr>
                </table>
             </section>
@@ -63,7 +63,7 @@
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints"><%= game.getP2Money() %></td>
+                     <td class="playerpoints">€ <%= game.getP2Money() %></td>
                   </tr>
                </table>
             </section>
@@ -74,14 +74,14 @@
       <section id="question" aria-labelledby="questionheading">
             <form id="questionform" action="index" method="get">
                <h2 id="questionheading" class="accessibility">Frage</h2>
-               <p id="questiontype"><%=game.getRound().getQuestion().getCategory().getName() %>> für € <%=game.getRound().getQuestion().getValue() * 10 %>></p>
+               <p id="questiontype"><%=game.getRound().getQuestion().getCategory().getName() %> für € <%=game.getRound().getQuestion().getValue()*10 %></p>
                
-               <p id="questiontext"><%=game.getRound().getQuestion().getText()%>></p>
+               <p id="questiontext"><%=game.getRound().getQuestion().getText()%></p>
                <ul id="answers">
                		<%int count =0; %>
                		<%for(Answer a : game.getRound().getQuestion().getAllAnswers()){ %>
                			<% count++; %>
-                        <li><input name="answers" id="answer_<%= count %>" value=<%= count%> type="checkbox"/><label class="tile clickable" for="answer_<%= count %>"> <%= a.getText() %>></label></li>
+                        <li><input name="answers" id="answer_<%= count %>" value=<%= count%> type="checkbox"/><label class="tile clickable" for="answer_<%= count %>"> <%= a.getText() %></label></li>
 
                		<%}%>
                </ul>

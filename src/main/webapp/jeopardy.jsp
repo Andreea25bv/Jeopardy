@@ -48,7 +48,7 @@
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints"><%= game.getP1Money() %></td>
+                     <td class="playerpoints">€ <%=game.getP1Money()%></td>
                   </tr>
                </table>
             </section>
@@ -62,19 +62,31 @@
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints"><%= game.getP1Money() %></td>
+                     <td class="playerpoints">€ <%=game.getP2Money()%></td>
                   </tr>
                </table>
             </section>
-            <p id="round">Fragen: <%=game.getRoundNr() %>> / 10</p>
+            <p id="round">Fragen: <%=game.getRoundNr()%> / 10</p>
          </section>
 
          <!-- Question -->
          <section id="question-selection" aria-labelledby="questionheading">
             <h2 id="questionheading" class="black accessibility">Jeopardy</h2>
-            <p class="user-info positive-change">Du hast richtig geantwortet: +1000 €</p>
-            <p class="user-info negative-change">Deadpool hat falsch geantwortet: -500 €</p>
-            <p class="user-info">Deadpool hat TUWIEN für € 1000 gewählt.</p>
+            <%if(game.getRoundNr() != 0 ){ %>
+           		 <% if(game.getRound().getPlayerHasAnswerd().equals("richtig")){%>
+            <p class="user-info positive-change">Du hast richtig geantwortet: +<%=game.getRound().getQuestion().getValue()*10%> €</p>
+           		 <%}else{%>
+        	<p class="user-info positive-change">Du hast falsch geantwortet: -<%=game.getRound().getQuestion().getValue()*10%> €</p>
+        		<%} %>
+        	
+            	<% if(game.getRound().getComputerHasAnswerd().equals("richtig")){%>      	
+        	<p class="user-info negative-change">Deadpool hat richtig geantwortet: +<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
+            <p class="user-info">Deadpool hat <%=game.getRound().getCompQuestion().getCategory().getName()%> für € <%=game.getRound().getCompQuestion().getValue()*10%> gewählt.</p>
+          		 <%}else{ %>
+            <p class="user-info negative-change">Deadpool hat falsch geantwortet: -<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
+            <p class="user-info">Deadpool hat <%=game.getRound().getCompQuestion().getCategory().getName()%> für € <%=game.getRound().getCompQuestion().getValue()*10%> gewählt.</p>
+           		<%} %>
+           <%} %>
             <form id="questionform" action="index" method="post">
                <fieldset>
                <legend class="accessibility">Fragenauswahl</legend>
@@ -83,8 +95,8 @@
                   <ol class="category_questions">
                      <li><input name="question_selection" id="question_1" value="1 Web Engineering" type="radio" disabled="disabled" /><label class="tile clickable" for="question_1">€ 100</label></li>
                      <li><input name="question_selection" id="question_2" value="2 Web Engineering" type="radio"/><label class="tile clickable" for="question_2">€ 200</label></li>
-                     <li><input name="question_selection" id="question_3" value="3 Web Engineering" type="radio"/><label class="tile clickable" for="question_3">€ 500</label></li>
-                     <li><input name="question_selection" id="question_4" value="4 Web Engineering" type="radio"/><label class="tile clickable" for="question_4">€ 750</label></li>
+                     <li><input name="question_selection" id="question_3" value="3 Web Engineering" type="radio"/><label class="tile clickable" for="question_3">€ 300</label></li>
+                     <li><input name="question_selection" id="question_4" value="4 Web Engineering" type="radio"/><label class="tile clickable" for="question_4">€ 400</label></li>
                   </ol>
                </section>
                <section class="questioncategory" aria-labelledby="ssdheading">
@@ -92,9 +104,9 @@
                   <ol class="category_questions">
                      <li><input name="question_selection" id="question_5" value="1 TU Wien" type="radio" /><label class="tile clickable" for="question_5">€ 100</label></li>
                      <li><input name="question_selection" id="question_6" value="2 TU Wien" type="radio" /><label class="tile clickable" for="question_6">€ 200</label></li>
-                     <li><input name="question_selection" id="question_7" value="3 TU Wien" type="radio" /><label class="tile clickable" for="question_7">€ 500</label></li>
-                     <li><input name="question_selection" id="question_8" value="4 TU Wien" type="radio" /><label class="tile clickable" for="question_8">€ 750</label></li>
-                     <li><input name="question_selection" id="question_9" value="5 TU Wien" type="radio" /><label class="tile clickable" for="question_9">€ 1000</label></li>
+                     <li><input name="question_selection" id="question_7" value="3 TU Wien" type="radio" /><label class="tile clickable" for="question_7">€ 300</label></li>
+                     <li><input name="question_selection" id="question_8" value="4 TU Wien" type="radio" /><label class="tile clickable" for="question_8">€ 400</label></li>
+                     <li><input name="question_selection" id="question_9" value="5 TU Wien" type="radio" /><label class="tile clickable" for="question_9">€ 500</label></li>
                   </ol>
                </section>
                <section class="questioncategory" aria-labelledby="webheading">
@@ -102,9 +114,9 @@
                   <ol class="category_questions">
                      <li><input name="question_selection" id="question_10" value="1 Semistrukturierte Daten" type="radio" /><label class="tile clickable" for="question_10">€ 100</label></li>
                      <li><input name="question_selection" id="question_11" value="2 Semistrukturierte Daten" type="radio" /><label class="tile clickable" for="question_11">€ 200</label></li>
-                     <li><input name="question_selection" id="question_12" value="3 Semistrukturierte Daten" type="radio" disabled="disabled" /><label class="tile clickable" for="question_12">€ 500</label></li>
-                     <li><input name="question_selection" id="question_13" value="4 Semistrukturierte Daten" type="radio" /><label class="tile clickable" for="question_13">€ 750</label></li>
-                     <li><input name="question_selection" id="question_14" value="5 Semistrukturierte Daten" type="radio" /><label class="tile clickable" for="question_14">€ 1000</label></li>
+                     <li><input name="question_selection" id="question_12" value="3 Semistrukturierte Daten" type="radio" disabled="disabled" /><label class="tile clickable" for="question_12">€ 300</label></li>
+                     <li><input name="question_selection" id="question_13" value="4 Semistrukturierte Daten" type="radio" /><label class="tile clickable" for="question_13">€ 400</label></li>
+                     <li><input name="question_selection" id="question_14" value="5 Semistrukturierte Daten" type="radio" /><label class="tile clickable" for="question_14">€ 500</label></li>
                   </ol>
                </section>
                <section class="questioncategory" aria-labelledby="sportheading">
@@ -112,8 +124,8 @@
                   <ol class="category_questions">
                      <li><input name="question_selection" id="question_15" value="1 Internet Technologien" type="radio" /><label class="tile clickable" for="question_15">€ 100</label></li>
                      <li><input name="question_selection" id="question_16" value="2 Internet Technologien" type="radio" disabled="disabled" /><label class="tile clickable" for="question_16">€ 200</label></li>
-                     <li><input name="question_selection" id="question_17" value="3 Internet Technologien" type="radio" /><label class="tile clickable" for="question_17">€ 500</label></li>
-                     <li><input name="question_selection" id="question_18" value="4 Internet Technologien" type="radio" /><label class="tile clickable" for="question_18">€ 750</label></li>
+                     <li><input name="question_selection" id="question_17" value="3 Internet Technologien" type="radio" /><label class="tile clickable" for="question_17">€ 300</label></li>
+                     <li><input name="question_selection" id="question_18" value="4 Internet Technologien" type="radio" /><label class="tile clickable" for="question_18">€ 400</label></li>
                   </ol>
                </section>
                <section class="questioncategory" aria-labelledby="tuwienheading">
@@ -121,12 +133,12 @@
                   <ol class="category_questions">
                      <li><input name="question_selection" id="question_19" value="1 Internet" type="radio" /><label class="tile clickable" for="question_19">€ 100</label></li>
                      <li><input name="question_selection" id="question_20" value="2 Internet" type="radio" /><label class="tile clickable" for="question_20">€ 200</label></li>
-                     <li><input name="question_selection" id="question_21" value="3 Internet" type="radio" /><label class="tile clickable" for="question_21">€ 500</label></li>
-                     <li><input name="question_selection" id="question_22" value="4 Internet" type="radio" /><label class="tile clickable" for="question_22">€ 750</label></li>
-                     <li><input name="question_selection" id="question_23" value="5 Internet" type="radio" disabled="disabled" /><label class="tile clickable" for="question_23">€ 1000</label></li>
+                     <li><input name="question_selection" id="question_21" value="3 Internet" type="radio" /><label class="tile clickable" for="question_21">€ 300</label></li>
+                     <li><input name="question_selection" id="question_22" value="4 Internet" type="radio" /><label class="tile clickable" for="question_22">€ 400</label></li>
+                     <li><input name="question_selection" id="question_23" value="5 Internet" type="radio" disabled="disabled" /><label class="tile clickable" for="question_23">€ 500</label></li>
                   </ol>
                </section> 
-               </fieldset>               
+               </fieldset>              
                <input class="greenlink formlink clickable" name="question_submit" id="next" type="submit" value="wählen" accesskey="s" />
                <input type="hidden" name="whattodo" value="waelen" />
             </form>
