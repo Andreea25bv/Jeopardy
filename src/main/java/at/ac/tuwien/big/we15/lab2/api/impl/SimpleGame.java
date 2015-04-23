@@ -60,5 +60,63 @@ public class SimpleGame implements Game{
 		return rounds.get(rounds.size()-1);
 	}
 	
-
+	/**
+	 * checks the availability of a Particular Question in all Rounds.
+	 * @param the Question you want to check if available
+	 * @return true, if the Question is available in a Round.
+	 * 			false, if the Question is not in any Round.
+	 */
+	public boolean checkQuestionAvailability(Question q){
+		boolean available = false;
+		Question playerQ = null;
+		Question computerQ = null;
+		
+		for(Round round:rounds){
+			playerQ = round.getQuestion();
+			computerQ = round.getCompQuestion();
+				
+			if(playerQ.equals(q)){
+				available = true;
+			}
+			if(computerQ.equals(q)){
+				available = true;
+			}
+			
+		}
+		return available;
+	}
+	
+	
+	/**
+	 * checks the availability of a Particular Question in all Rounds.
+	 * @param nr: int, the question number defined in the jsp document per category
+	 * 		  nr element of [1,2,3,4,5]
+	 * @param category: String, the Category of the Question
+	 * @return true, if the Question is available in a Round.
+	 * 			false, if the Question is not in any Round.
+	 */
+	public boolean checkQuestionAvailability(int nr, String category){
+		boolean available = false;
+		Question playerQ = null;
+		Question computerQ = null;
+		
+		for(Round round:rounds){
+			playerQ = round.getQuestion();
+			computerQ = round.getCompQuestion();
+				
+			if(playerQ.getCategory().getName().equals(category)){
+				if((playerQ.getValue()/10) == nr){
+					available = true;
+				}
+			}
+			if(computerQ.getCategory().getName().equals(category)){
+				if((computerQ.getValue()/10) == nr){
+					available = true;
+				}
+			}
+			
+		}
+		return available;
+	}
+	
 }

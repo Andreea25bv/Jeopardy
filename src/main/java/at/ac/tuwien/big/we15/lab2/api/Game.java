@@ -12,5 +12,7 @@ public interface Game {
 	public boolean computerHasAnswered();
 	public Player getPlayer1();
 	public Player getPlayer2();
+	public boolean checkQuestionAvailability(Question q);
+	public boolean checkQuestionAvailability(int nr, String category);
 
 }
