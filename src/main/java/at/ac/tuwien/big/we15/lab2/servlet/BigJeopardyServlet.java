@@ -90,9 +90,13 @@ public class BigJeopardyServlet extends HttpServlet {
 				current_game.getRound().setPlayerHasAnswerd("falsch");
 			}
 			
-			
-			Question computer_question = this.choseQuestionRandom(); //the chosen question can not be disabled TODO
+			//the chosen question can not be disabled TODO
+			Question computer_question = this.choseQuestionRandom();
+			while(current_game.checkQuestionAvailability(computer_question)){
+				computer_question = this.choseQuestionRandom();
+			}
 			current_game.getRound().setCompQuestion(computer_question);
+			
 			if(current_game.computerHasAnswered()){
 				current_game.setP2Money(current_game.getP2Money()+(computer_question.getValue()*10));
 				current_game.getRound().setComputerHasAnswerd("richtig");
@@ -102,7 +106,6 @@ public class BigJeopardyServlet extends HttpServlet {
 				current_game.getRound().setComputerHasAnswerd("falsch");
 			}
 			
-			//disable question and computer_question in jeopardy.jsp TODO
 			
 			if(current_game.getRoundNr() == 10){
 				//winner page
@@ -185,7 +188,7 @@ public class BigJeopardyServlet extends HttpServlet {
 	private Question choseQuestionRandom(){
 		int category_random = new Random().nextInt(5);  // 0,1,2,3 or 4
 		int value_random=0;
-		if(category_random == 1 || category_random == 4){
+		if(category_random == 0 || category_random == 3){
 			value_random = new Random().nextInt(4)+1;  // 1,2,3 or 4
 		}
 		else{

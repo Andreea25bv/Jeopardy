@@ -63,26 +63,30 @@ public class SimpleGame implements Game{
 	/**
 	 * checks the availability of a Particular Question in all Rounds.
 	 * @param the Question you want to check if available
-	 * @return true, if the Question is available in a Round.
-	 * 			false, if the Question is not in any Round.
+	 * @return true, (if the Question is available in a Round) if the question was already chosen .
+	 * 			false, (if the Question is not in any Round)if the question was not chosen(is available).
 	 */
 	public boolean checkQuestionAvailability(Question q){
 		boolean available = false;
 		Question playerQ = null;
 		Question computerQ = null;
 		
-		for(Round round:rounds){
-			playerQ = round.getQuestion();
-			computerQ = round.getCompQuestion();
+		for(int i = 0; i< rounds.size()-2;i++){
+			playerQ = rounds.get(i).getQuestion();
+			computerQ = rounds.get(i).getCompQuestion();
 				
+			if(playerQ.equals(q) || computerQ.equals(q)){
+				available = true;
+			}
+		}
+		if(available == false){
+			playerQ = rounds.get(rounds.size()-1).getQuestion();
+					
 			if(playerQ.equals(q)){
 				available = true;
 			}
-			if(computerQ.equals(q)){
-				available = true;
-			}
-			
 		}
+			
 		return available;
 	}
 	
