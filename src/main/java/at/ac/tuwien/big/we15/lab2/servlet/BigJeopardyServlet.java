@@ -92,7 +92,7 @@ public class BigJeopardyServlet extends HttpServlet {
 			
 			//the chosen question can not be disabled TODO
 			Question computer_question = this.choseQuestionRandom();
-			while(current_game.checkQuestionAvailability(computer_question)){
+			while(!current_game.checkQuestionAvailability(computer_question)){
 				computer_question = this.choseQuestionRandom();
 			}
 			current_game.getRound().setCompQuestion(computer_question);

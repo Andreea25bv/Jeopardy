@@ -63,27 +63,30 @@ public class SimpleGame implements Game{
 	/**
 	 * checks the availability of a Particular Question in all Rounds.
 	 * @param the Question you want to check if available
-	 * @return true, (if the Question is available in a Round) if the question was already chosen .
-	 * 			false, (if the Question is not in any Round)if the question was not chosen(is available).
+	 * @return false, (if the Question is available in a Round) if the question was already chosen .
+	 * 			true, (if the Question is not in any Round)if the question was not chosen(is available).
 	 */
 	public boolean checkQuestionAvailability(Question q){
-		boolean available = false;
+		boolean available = true;
 		Question playerQ = null;
 		Question computerQ = null;
 		
-		for(int i = 0; i< rounds.size()-2;i++){
+		for(int i=0; i <= rounds.size()-2; i++){
 			playerQ = rounds.get(i).getQuestion();
 			computerQ = rounds.get(i).getCompQuestion();
 				
-			if(playerQ.equals(q) || computerQ.equals(q)){
-				available = true;
+			if((playerQ.getValue() == q.getValue()) && (playerQ.getCategory().getName().equals(q.getCategory().getName()))){
+				available = false;
+			}
+			if((computerQ.getValue() == q.getValue()) && (computerQ.getCategory().getName().equals(q.getCategory().getName()))){
+				available = false;
 			}
 		}
-		if(available == false){
+		if(available == true){
 			playerQ = rounds.get(rounds.size()-1).getQuestion();
 					
-			if(playerQ.equals(q)){
-				available = true;
+			if((playerQ.getValue() == q.getValue()) && (playerQ.getCategory().getName().equals(q.getCategory().getName()))){
+				available = false;
 			}
 		}
 			
