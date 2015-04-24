@@ -61,7 +61,41 @@ public class BigJeopardyServlet extends HttpServlet {
 			//login page
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
 			rd.forward(request, response);
-		}		
+		}else{
+			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
+			rd.forward(request, response);
+		}
+
+		
+	}
+	
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws IOException, ServletException {
+		
+		// get the input symbol
+		String action = request.getParameter("whattodo");  
+
+		HttpSession session = request.getSession(true);
+				
+				
+		if (action == null) {
+			//login page
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
+			rd.forward(request, response);
+		}
+		else if(action.equals("login")){
+			
+			Player player = jeopardyFactory.createPlayer();
+			Game game = jeopardyFactory.createGame(player,computerPlayer);
+			
+			session.setAttribute("game", game);
+			session.setAttribute("player", player);
+			
+			//jeopardy page
+			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
+			rd.forward(request, response);
+		}
 		else if(action.equals("answerd")){
 			
 			Game current_game = (SimpleGame) session.getAttribute("game");
@@ -120,35 +154,6 @@ public class BigJeopardyServlet extends HttpServlet {
 			
 		}
 		
-	}
-	
-	@Override
-	public void doPost(HttpServletRequest request, HttpServletResponse response) 
-			throws IOException, ServletException {
-		
-		// get the input symbol
-		String action = request.getParameter("whattodo");  
-
-		HttpSession session = request.getSession(true);
-				
-				
-		if (action == null) {
-			//login page
-			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
-			rd.forward(request, response);
-		}
-		else if(action.equals("login")){
-			
-			Player player = jeopardyFactory.createPlayer();
-			Game game = jeopardyFactory.createGame(player,computerPlayer);
-			
-			session.setAttribute("game", game);
-			session.setAttribute("player", player);
-			
-			//jeopardy page
-			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
-			rd.forward(request, response);
-		}
 		else if(action.equals("waelen")){
 			
 			Game current = (SimpleGame) session.getAttribute("game");

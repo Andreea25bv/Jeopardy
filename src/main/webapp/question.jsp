@@ -73,7 +73,7 @@
             
       <!-- Question -->
       <section id="question" aria-labelledby="questionheading">
-            <form id="questionform" action="index" method="get">
+            <form id="questionform" action="index" method="post">
                <h2 id="questionheading" class="accessibility">Frage</h2>
                <p id="questiontype"><%=game.getRound().getQuestion().getCategory().getName() %> für € <%=game.getRound().getQuestion().getValue()*10 %></p>
                
