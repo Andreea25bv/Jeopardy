@@ -17,10 +17,33 @@ public interface Player {
 	 */
 	public String getName();
 	
+
 	/**
-	 * Sets a players name.
+	 * Sets a players money
 	 * 
-	 * @param name the player name
+	 * @param money
 	 */
-	public void setName(String name);
+	public void setMoney(int money);
+	
+	/**
+	 * Gets a players money
+	 * 
+	 * @return money
+	 */
+	public int getMoney();
+
+	/**
+	 * Sets the avatar
+	 * @param avatar
+	 */
+	public void setAvatar(Avatar avatar);
+	
+	/**
+	 * Gets the avatar
+	 * @return avatar
+	 */
+	public Avatar getAvatar();
+	
+	
+	
 }

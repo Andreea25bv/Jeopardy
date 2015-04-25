@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import at.ac.tuwien.big.we15.lab2.api.Answer;
+import at.ac.tuwien.big.we15.lab2.api.Avatar;
 import at.ac.tuwien.big.we15.lab2.api.Category;
 import at.ac.tuwien.big.we15.lab2.api.Game;
 import at.ac.tuwien.big.we15.lab2.api.Player;
@@ -61,8 +62,12 @@ public class BigJeopardyServlet extends HttpServlet {
 			//login page
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
 			rd.forward(request, response);
-		}else{
+		}else if(session.getAttribute("game") != null){
 			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
+			rd.forward(request, response);
+		}else{
+			
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
 		}
 
@@ -84,9 +89,13 @@ public class BigJeopardyServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
 			rd.forward(request, response);
 		}
-		else if(action.equals("login")){
+		else if(action.equals("login") || action.equals("nextgame")){
 			
 			Player player = jeopardyFactory.createPlayer();
+			computerPlayer = jeopardyFactory.createPlayer();
+			//set the opponent player avatar
+			computerPlayer.setAvatar(Avatar.getOpponent(player.getAvatar()));
+			
 			Game game = jeopardyFactory.createGame(player,computerPlayer);
 			
 			session.setAttribute("game", game);
@@ -116,11 +125,11 @@ public class BigJeopardyServlet extends HttpServlet {
 			
 			
 			if(current_game.getRound().getQuestion().check(chosen) && chosen!=null){
-				current_game.setP1Money(current_game.getP1Money()+(current_game.getRound().getQuestion().getValue()*10));
+				current_game.getPlayer1().setMoney(current_game.getPlayer1().getMoney()+(current_game.getRound().getQuestion().getValue()*10));
 				current_game.getRound().setPlayerHasAnswerd("richtig");
 			}
 			else{
-				current_game.setP1Money(current_game.getP1Money()-(current_game.getRound().getQuestion().getValue()*10));
+				current_game.getPlayer1().setMoney(current_game.getPlayer1().getMoney()-(current_game.getRound().getQuestion().getValue()*10));
 				current_game.getRound().setPlayerHasAnswerd("falsch");
 			}
 			
@@ -132,11 +141,11 @@ public class BigJeopardyServlet extends HttpServlet {
 			current_game.getRound().setCompQuestion(computer_question);
 			
 			if(current_game.computerHasAnswered()){
-				current_game.setP2Money(current_game.getP2Money()+(computer_question.getValue()*10));
+				current_game.getPlayer2().setMoney(current_game.getPlayer2().getMoney()+(computer_question.getValue()*10));
 				current_game.getRound().setComputerHasAnswerd("richtig");
 			}
 			else{
-				current_game.setP2Money(current_game.getP2Money()-(computer_question.getValue()*10));
+				current_game.getPlayer2().setMoney(current_game.getPlayer2().getMoney()-(computer_question.getValue()*10));
 				current_game.getRound().setComputerHasAnswerd("falsch");
 			}
 			
@@ -175,17 +184,6 @@ public class BigJeopardyServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("question.jsp");
 			rd.forward(request, response);
 			
-		}
-		else if(action.equals("nextgame")){
-			
-			Player player = (SimplePlayer) session.getAttribute("player");
-			Game game = jeopardyFactory.createGame(player,computerPlayer);
-			
-			session.setAttribute("game", game);
-			
-			//jeopardy page
-			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
-			rd.forward(request, response);
 		}
 		
 	}

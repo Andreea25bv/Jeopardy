@@ -1,10 +1,9 @@
-<%@page import="at.ac.tuwien.big.we15.lab2.api.Answer"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="at.ac.tuwien.big.we15.lab2.api.Game" %>
-<%@page import="at.ac.tuwien.big.we15.lab2.api.Question" %>
+<%@page import="at.ac.tuwien.big.we15.lab2.api.Answer"%>
 <jsp:useBean id="game" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Game" />
 <jsp:useBean id="player" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Player"/>
+
     
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
@@ -31,7 +30,7 @@
 		<nav role="navigation" aria-labelledby="navheading">
 			<h2 id="navheading" class="accessibility">Navigation</h2>
 			<ul>
-				<li><a class="orangelink navigationlink" id="logoutlink" title="Klicke hier um dich abzumelden" href="login.xhtml" accesskey="l">Abmelden</a></li>
+				<li><a class="orangelink navigationlink" id="logoutlink" title="Klicke hier um dich abzumelden" href="login.jsp" accesskey="l">Abmelden</a></li>
 			</ul>
 		</nav>
       
@@ -42,29 +41,29 @@
             <h2 id="gameinfoinfoheading" class="accessibility">Spielinformationen</h2>
             <section id="firstplayer" class="playerinfo leader" aria-labelledby="firstplayerheading">
                <h3 id="firstplayerheading" class="accessibility">Führender Spieler</h3>
-               <img class="avatar" src="img/avatar/black-widow_head.png" alt="Spieler-Avatar Black Widow" />
+               <img class="avatar" src="img/avatar/<%= player.getAvatar().getImageFull() %>" alt="Spieler-Avatar <%= player.getName() %>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
-                     <td class="playername">Black Widow (Du)</td>
+                     <td class="playername"><%= player.getName() %> (Du)</td>
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ <%= game.getP1Money() %></td>
+                     <td class="playerpoints">€ <%= player.getMoney() %></td>
                   </tr>
                </table>
             </section>
             <section id="secondplayer" class="playerinfo" aria-labelledby="secondplayerheading">
                <h3 id="secondplayerheading" class="accessibility">Zweiter Spieler</h3>
-               <img class="avatar" src="img/avatar/deadpool_head.png" alt="Spieler-Avatar Deadpool" />
+               <img class="avatar" src="img/avatar/<%= game.getPlayer2().getAvatar().getImageFull() %>" alt="Spieler-Avatar <%= game.getPlayer2().getName() %>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
-                     <td class="playername">Deadpool</td>
+                     <td class="playername"><%= game.getPlayer2().getName() %></td>
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ <%= game.getP2Money() %></td>
+                     <td class="playerpoints">€ <%= game.getPlayer2().getMoney() %></td>
                   </tr>
                </table>
             </section>

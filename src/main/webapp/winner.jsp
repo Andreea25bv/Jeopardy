@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="at.ac.tuwien.big.we15.lab2.api.Game" %>
-<%@page import="at.ac.tuwien.big.we15.lab2.api.Question" %>
 <jsp:useBean id="game" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Game" />
 <jsp:useBean id="player" scope="session" type="at.ac.tuwien.big.we15.lab2.api.Player"/>
 
@@ -30,7 +28,7 @@
 		<nav role="navigation" aria-labelledby="navheading">
 			<h2 id="navheading" class="accessibility">Navigation</h2>
 			<ul>
-				<li><a class="orangelink navigationlink" id="logoutlink" title="Klicke hier um dich abzumelden" href="login.xhtml" accesskey="l">Abmelden</a></li>
+				<li><a class="orangelink navigationlink" id="logoutlink" title="Klicke hier um dich abzumelden" href="login.jsp" accesskey="l">Abmelden</a></li>
 			</ul>
 		</nav>
       
@@ -46,68 +44,68 @@
         		<%} %>
         	
             	<% if(game.getRound().getComputerHasAnswerd().equals("richtig")){%>      	
-        	<p class="user-info positive-change">Deadpool hat richtig geantwortet: +<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
+        	<p class="user-info positive-change"><%=game.getPlayer2().getName()%> hat richtig geantwortet: +<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
           		 <%}else{ %>
-            <p class="user-info negative-change">Deadpool hat falsch geantwortet: -<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
+            <p class="user-info negative-change"><%=game.getPlayer2().getName()%> hat falsch geantwortet: -<%=game.getRound().getCompQuestion().getValue()*10%> €</p>
            		<%} %>
 
            
             	
-            	<%if(game.getP1Money() > game.getP2Money()){ %>
+            	<%if(player.getMoney() > game.getPlayer2().getMoney()){ %>
            <section class="playerinfo leader" aria-labelledby="winnerannouncement">
-               <h3 id="winnerannouncement">Gewinner: Black Widow</h3>
-               <img class="avatar" src="img/avatar/black-widow.png" alt="Spieler-Avatar Black Widow" />
+               <h3 id="winnerannouncement">Gewinner: <%=player.getName()%></h3>
+               <img class="avatar" src="img/avatar/<%=player.getAvatar().getImageFull()%>" alt="Spieler-Avatar <%=player.getName()%>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
-                     <td class="playername">Black Widow</td>
+                     <td class="playername"><%=player.getName()%></td>
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ <%=game.getP1Money() %></td>
+                     <td class="playerpoints">€ <%=player.getMoney() %></td>
                   </tr>
                </table>
             </section>
             <section class="playerinfo" aria-labelledby="loserheading">
-               <h3 id="loserheading" class="accessibility">Verlierer: Deadpool</h3>
-               <img class="avatar" src="img/avatar/deadpool_head.png" alt="Spieler-Avatar Deadpool" />
+               <h3 id="loserheading" class="accessibility">Verlierer: <%=game.getPlayer2().getName()%></h3>
+               <img class="avatar" src="img/avatar/<%=game.getPlayer2().getAvatar().getImageFull()%>" alt="Spieler-Avatar <%=game.getPlayer2().getName()%>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
-                     <td class="playername">Deadpool</td>
+                     <td class="playername"><%=game.getPlayer2().getName()%></td>
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ <%=game.getP2Money()%></td>
+                     <td class="playerpoints">€ <%=game.getPlayer2().getMoney()%></td>
                   </tr>
                </table>
             </section>
             <%}else{ %>
            <section class="playerinfo leader" aria-labelledby="winnerannouncement">
-            <h3 id="winnerannouncement">Gewinner: Deadpool</h3>
-               <img class="avatar" src="img/avatar/deadpool.png" alt="Spieler-Avatar Deadpool" />
+            <h3 id="winnerannouncement">Gewinner: <%=game.getPlayer2().getName()%></h3>
+               <img class="avatar" src="img/avatar/<%=game.getPlayer2().getAvatar().getImageFull()%>" alt="Spieler-Avatar <%=game.getPlayer2().getName()%>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
-                     <td class="playername">Deadpool</td>
+                     <td class="playername"><%=game.getPlayer2().getName()%></td>
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ <%=game.getP2Money() %></td>
+                     <td class="playerpoints">€ <%=game.getPlayer2().getMoney() %></td>
                   </tr>
                </table>
             </section>
             <section class="playerinfo" aria-labelledby="loserheading">
-               <h3 id="loserheading" class="accessibility">Verlierer: Black Widow</h3>
-               <img class="avatar" src="img/avatar/black-widow_head.png" alt="Spieler-Avatar Black Widow" />
+               <h3 id="loserheading" class="accessibility">Verlierer: <%=player.getName()%></h3>
+               <img class="avatar" src="img/avatar/<%=player.getAvatar().getImageFull()%>" alt="Spieler-Avatar <%=player.getName()%>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
-                     <td class="playername">Black Widow</td>
+                     <td class="playername"><%=player.getName()%></td>
                   </tr>
                   <tr>
                      <th class="accessibility">Spielerpunkte</th>
-                     <td class="playerpoints">€ <%=game.getP1Money()%></td>
+                     <td class="playerpoints">€ <%=player.getMoney()%></td>
                   </tr>
                </table>
             </section>
