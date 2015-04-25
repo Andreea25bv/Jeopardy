@@ -22,24 +22,52 @@ public class SimpleGame implements Game{
 		this.rounds = new ArrayList<Round>();
 	}
 	
-	
+	/**
+	 * 
+	 * @return true, when the computer will answer correct to a question
+	 * 			false, otherwise
+	 */
 	public boolean computerHasAnswered(){
 		return new Random().nextBoolean();
 		
 	}
+	
+	/**
+	 * 
+	 * @return the human player
+	 */
 	public Player getPlayer1(){
 		return player1;
 	}
+	
+	/**
+	 * 
+	 * @return the computer player
+	 */
 	public Player getPlayer2(){
 		return player2;
 	}
 	
+	/**
+	 * 
+	 * @return the number of played rounds; 
+	 */
 	public int getRoundNr(){
 		return rounds.size();
 	}
+	
+	/**
+	 * add a new round 
+	 * @param r is the new Round to insert;
+	 */
 	public void addRound(Round r){
 		this.rounds.add(r);
 	}
+	
+	/**
+	 * 
+	 * @return the last played round
+	 */
 	public Round getRound(){
 		return rounds.get(rounds.size()-1);
 	}

@@ -22,12 +22,9 @@ import at.ac.tuwien.big.we15.lab2.api.Game;
 import at.ac.tuwien.big.we15.lab2.api.Player;
 import at.ac.tuwien.big.we15.lab2.api.JeopardyFactory;
 import at.ac.tuwien.big.we15.lab2.api.Question;
-import at.ac.tuwien.big.we15.lab2.api.QuestionDataProvider;
 import at.ac.tuwien.big.we15.lab2.api.Round;
-import at.ac.tuwien.big.we15.lab2.api.impl.JSONQuestionDataProvider;
 import at.ac.tuwien.big.we15.lab2.api.impl.ServletJeopardyFactory;
 import at.ac.tuwien.big.we15.lab2.api.impl.SimpleGame;
-import at.ac.tuwien.big.we15.lab2.api.impl.SimplePlayer;
 import at.ac.tuwien.big.we15.lab2.api.impl.SimpleQuestion;
 import at.ac.tuwien.big.we15.lab2.api.impl.SimpleRound;
 
@@ -188,6 +185,10 @@ public class BigJeopardyServlet extends HttpServlet {
 		
 	}
 	
+	/**
+	 * 
+	 * @return a question, that was randomly chose
+	 */
 	private Question choseQuestionRandom(){
 		int category_random = new Random().nextInt(5);  // 0,1,2,3 or 4
 		int value_random=0;

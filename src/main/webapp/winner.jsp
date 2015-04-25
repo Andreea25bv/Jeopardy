@@ -68,7 +68,7 @@
             </section>
             <section class="playerinfo" aria-labelledby="loserheading">
                <h3 id="loserheading" class="accessibility">Verlierer: <%=game.getPlayer2().getName()%></h3>
-               <img class="avatar" src="img/avatar/<%=game.getPlayer2().getAvatar().getImageFull()%>" alt="Spieler-Avatar <%=game.getPlayer2().getName()%>" />
+               <img class="avatar" src="img/avatar/<%=game.getPlayer2().getAvatar().getImageHead() %>" alt="Spieler-Avatar <%=game.getPlayer2().getName()%>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
@@ -97,7 +97,7 @@
             </section>
             <section class="playerinfo" aria-labelledby="loserheading">
                <h3 id="loserheading" class="accessibility">Verlierer: <%=player.getName()%></h3>
-               <img class="avatar" src="img/avatar/<%=player.getAvatar().getImageFull()%>" alt="Spieler-Avatar <%=player.getName()%>" />
+               <img class="avatar" src="img/avatar/<%=player.getAvatar().getImageHead()%>" alt="Spieler-Avatar <%=player.getName()%>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>

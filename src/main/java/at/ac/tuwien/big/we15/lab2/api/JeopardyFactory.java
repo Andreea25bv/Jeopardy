@@ -11,21 +11,44 @@
 package at.ac.tuwien.big.we15.lab2.api;
 
 
-/**
- * Factory interface for the quiz model
- */
+
 public interface JeopardyFactory {
 	
+	
+	/**
+	 * 
+	 * @return a new Category
+	 */
 	public Category createCategory();
 	
+	
+	/**
+	 * 
+	 * @return a new Question
+	 */
 	public Question createQuestion();
 	
+	/**
+	 * 
+	 * @return a new Answer
+	 */
 	public Answer createAnswer();
 	
+	/**
+	 * 
+	 * @return a new Player
+	 */
 	public Player createPlayer();
 	
+	/**
+	 * 
+	 * @param p1 the human player
+	 * @param p2 the computer player
+	 * @return a new Game 
+	 */
 	public Game createGame(Player p1, Player p2);
 
+	
 	public QuestionDataProvider createQuestionDataProvider();
 
 }
