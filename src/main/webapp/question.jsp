@@ -41,7 +41,7 @@
             <h2 id="gameinfoinfoheading" class="accessibility">Spielinformationen</h2>
             <section id="firstplayer" class="playerinfo leader" aria-labelledby="firstplayerheading">
                <h3 id="firstplayerheading" class="accessibility">Führender Spieler</h3>
-               <img class="avatar" src="img/avatar/<%= player.getAvatar().getImageFull() %>" alt="Spieler-Avatar <%= player.getName() %>" />
+               <img class="avatar" src="img/avatar/<%= player.getAvatar().getImageHead() %>" alt="Spieler-Avatar <%= player.getName() %>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
@@ -55,7 +55,7 @@
             </section>
             <section id="secondplayer" class="playerinfo" aria-labelledby="secondplayerheading">
                <h3 id="secondplayerheading" class="accessibility">Zweiter Spieler</h3>
-               <img class="avatar" src="img/avatar/<%= game.getPlayer2().getAvatar().getImageFull() %>" alt="Spieler-Avatar <%= game.getPlayer2().getName() %>" />
+               <img class="avatar" src="img/avatar/<%= game.getPlayer2().getAvatar().getImageHead() %>" alt="Spieler-Avatar <%= game.getPlayer2().getName() %>" />
                <table>
                   <tr>
                      <th class="accessibility">Spielername</th>
