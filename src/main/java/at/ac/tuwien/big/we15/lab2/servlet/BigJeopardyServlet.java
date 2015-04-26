@@ -1,9 +1,6 @@
 package at.ac.tuwien.big.we15.lab2.servlet;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +26,8 @@ import at.ac.tuwien.big.we15.lab2.api.impl.SimpleQuestion;
 import at.ac.tuwien.big.we15.lab2.api.impl.SimpleRound;
 
 public class BigJeopardyServlet extends HttpServlet {
-	
+
+	private static final long serialVersionUID = 1L;
 
 	private JeopardyFactory jeopardyFactory;
 	
@@ -52,13 +50,15 @@ public class BigJeopardyServlet extends HttpServlet {
 			throws IOException, ServletException {
 		
 		String action = request.getParameter("whattodo");  
-
+		
 		HttpSession session = request.getSession(true);
 				
 		if (action == null) {
+			
 			//login page
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
 			rd.forward(request, response);
+			
 		}else if(session.getAttribute("game") != null){
 			RequestDispatcher rd = request.getRequestDispatcher("jeopardy.jsp"); 
 			rd.forward(request, response);
@@ -67,6 +67,8 @@ public class BigJeopardyServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
 		}
+		
+		
 
 		
 	}
@@ -75,12 +77,17 @@ public class BigJeopardyServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws IOException, ServletException {
 		
+		
 		// get the input symbol
 		String action = request.getParameter("whattodo");  
 
 		HttpSession session = request.getSession(true);
-				
-				
+		
+		if(action.equals("logout")){
+			session.invalidate();
+			action = null;
+		}
+		
 		if (action == null) {
 			//login page
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp"); 
@@ -88,8 +95,15 @@ public class BigJeopardyServlet extends HttpServlet {
 		}
 		else if(action.equals("login") || action.equals("nextgame")){
 			
-			Player player = jeopardyFactory.createPlayer();
+			Player player = (Player) session.getAttribute("player");
+			
+			if(player == null){
+				player = jeopardyFactory.createPlayer();
+			}
+			
+			player.setMoney(0);
 			computerPlayer = jeopardyFactory.createPlayer();
+			
 			//set the opponent player avatar
 			computerPlayer.setAvatar(Avatar.getOpponent(player.getAvatar()));
 			
@@ -129,8 +143,9 @@ public class BigJeopardyServlet extends HttpServlet {
 				current_game.getPlayer1().setMoney(current_game.getPlayer1().getMoney()-(current_game.getRound().getQuestion().getValue()*10));
 				current_game.getRound().setPlayerHasAnswerd("falsch");
 			}
+
+			//TODO: Questionselection of Player or Player2 depending on Score.
 			
-			//the chosen question can not be disabled TODO
 			Question computer_question = this.choseQuestionRandom();
 			while(!current_game.checkQuestionAvailability(computer_question)){
 				computer_question = this.choseQuestionRandom();
